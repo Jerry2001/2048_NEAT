@@ -16,9 +16,13 @@ class GameCore:
         self.score = 0
         self.state = State.MENU
         self.move = 0
+        self.max_tile = 0
 
     def Score(self):
         return self.score
+
+    def Max_tile(self):
+        return self.max_tile
 
     def Move(self):
         return self.move
@@ -39,6 +43,7 @@ class GameCore:
         self.move = 0
         self.board = fresh_board(self.game_size)
         self.state = State.IDLE
+        self.max_tile = 0
 
         # Spawn two tiles randomly on the board
         self._spawn_tile(self.board)
@@ -88,6 +93,7 @@ class GameCore:
     # Can also be used to notify new tile to observers
     def _new_tile_appeared(self, new_tile_value):
         self.score = self.score + new_tile_value
+        self.max_tile = max(self.max_tile, new_tile_value)
 
     def _merge_down(self, board):
         merged = False

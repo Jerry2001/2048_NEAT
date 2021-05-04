@@ -16,6 +16,7 @@ class GameGUI(Frame):
         self.board_size = len(self.board)
         self.score = game.Score()
         self.move = game.Move()
+        self.max_tile = game.Max_tile()
 
         Frame.__init__(self)
         self.grid()
@@ -45,15 +46,10 @@ class GameGUI(Frame):
 
         self.score = self.game.Score()
         self.move = self.game.Move()
+        self.max_tile = self.game.Max_tile()
 
-        self.score_grid_cells[0].config(text="Score: " + str(self.score))
-        self.score_grid_cells[1].config(text="Moves: " + str(self.move))
-
-        self.update_idletasks()
-        self.update()
-
-    # Return other
-    def repaint_other(self):
+        #self.score_grid_cells[0].config(text="Score: " + str(self.score))
+        self.score_grid_cells[0].config(text="Max Tile: " + str(self.max_tile))
         self.score_grid_cells[1].config(text="Moves: " + str(self.move))
 
         self.update_idletasks()

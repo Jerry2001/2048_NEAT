@@ -3,6 +3,7 @@ import neat
 import game.tk_gui as gui
 import numpy as np
 
+import visualize
 from game import utils
 from game.utils import Direction
 from game.core_2048 import GameCore
@@ -79,15 +80,17 @@ def run(config_file):
     p.add_reporter(neat.Checkpointer(5))
 
     # Run for up to 300 generations.
-    winner = p.run(eval_genomes, 300)
+    winner = p.run(eval_genomes, 15)
 
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(winner))
+    visualize.plot_stats(stats, ylog=False, view=True)
+    visualize.plot_species(stats, view=True)
 
 if __name__ == '__main__':
     # Determine path to configuration file. This path manipulation is
     # here so that the script will run successfully regardless of the
     # current working directory.
     local_dir = os.path.dirname(__file__)
-    config_path = os.path.join(local_dir, 'config.py')
+    config_path = os.path.join(local_dir, 'config')
     run(config_path)
