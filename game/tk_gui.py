@@ -48,9 +48,9 @@ class GameGUI(Frame):
         self.move = self.game.Move()
         self.max_tile = self.game.Max_tile()
 
-        #self.score_grid_cells[0].config(text="Score: " + str(self.score))
-        self.score_grid_cells[0].config(text="Max Tile: " + str(self.max_tile))
-        self.score_grid_cells[1].config(text="Moves: " + str(self.move))
+        self.score_grid_cells[0].config(text="Score: " + str(self.score))
+        self.score_grid_cells[1].config(text="Max Tile: " + str(self.max_tile))
+        #self.score_grid_cells[1].config(text="Moves: " + str(self.move))
 
         self.update_idletasks()
         self.update()

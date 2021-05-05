@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_stats(statistics, ylog=False, view=False, filename='avg_fitness.svg'):
+def plot_stats(statistics, ylog=False, view=False, filename=None):
     """ Plots the population's average and best fitness. """
     if plt is None:
         warnings.warn("This display is not available due to a missing optional dependency (matplotlib)")
@@ -31,8 +31,8 @@ def plot_stats(statistics, ylog=False, view=False, filename='avg_fitness.svg'):
     plt.legend(loc="best")
     if ylog:
         plt.gca().set_yscale('symlog')
-
-    plt.savefig(filename)
+    if(filename != None):
+        plt.savefig(filename)
     if view:
         plt.show()
 
@@ -88,7 +88,7 @@ def plot_spikes(spikes, view=False, filename=None, title=None):
     return fig
 
 
-def plot_species(statistics, view=False, filename='speciation.svg'):
+def plot_species(statistics, view=False, filename=None):
     """ Visualizes speciation throughout evolution. """
     if plt is None:
         warnings.warn("This display is not available due to a missing optional dependency (matplotlib)")
@@ -104,8 +104,8 @@ def plot_species(statistics, view=False, filename='speciation.svg'):
     plt.title("Speciation")
     plt.ylabel("Size per Species")
     plt.xlabel("Generations")
-
-    plt.savefig(filename)
+    if(filename != None):
+        plt.savefig(filename)
 
     if view:
         plt.show()

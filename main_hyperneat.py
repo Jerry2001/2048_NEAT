@@ -84,6 +84,40 @@ def eval_genome(genome_id, genome, config):
 	genome.fitness = game.Score() 
 	#genome.fitness /= 5.0
 
+def winner_gif(winner_net):
+	game.restart_game()
+	GUI.set_game(game)
+	game_over = False
+	board = game.Board()
+	consecutive_not_moved = 0
+	successful_moves = 0
+
+	while not game_over:
+		in_neurons = (np.array(game.Board())).flatten()
+		output = winner_net.activate(in_neurons)
+    	# Use the 'most activated' output neuron as the intended direction
+        # Generate list of tuples which are (direction, output weight)
+		output_moves = [(map_neuron_to_move(i), output[i]) for i in range(len(output))]
+		output_moves = sorted(output_moves, key=lambda x: x[1])
+
+        # Try move the board starting with the highest weighted output direction
+		for (direction, weight) in output_moves:
+			moved = game.try_move(direction)
+			if moved:
+				break
+
+		time.sleep(0.03)
+		if moved:
+			GUI.repaint_board()
+			successful_moves = successful_moves + 1
+		else:
+			consecutive_not_moved = consecutive_not_moved + 1
+
+		if game.State() == State.WIN or game.State() == State.LOSS:
+			game_over = True
+		elif consecutive_not_moved == NOT_MOVED_RESTART_THRESHOLD:
+			game_over = True
+
 # Create the population and run the XOR task by providing the above fitness function.
 def run(config_file):
 	config = neat.config.Config(neat.genome.DefaultGenome, neat.reproduction.DefaultReproduction,
@@ -98,8 +132,15 @@ def run(config_file):
 
     # Display the winning genome.
 	print('\nBest genome:\n{!s}'.format(winner))
-	visualize.plot_stats(stats, ylog=False, view=True)
-	visualize.plot_species(stats, view=True)
+	visualize.plot_stats(stats, ylog=False, view=True, filename="hyperneatstats")
+    visualize.plot_species(stats, view=True, filename= "hyperneatspecies")
+	winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
+    while(True):
+    	winner_flag = not (input() == "False")
+    	if(winner_flag == True):
+    		winner_gif(winner_net)
+    	else:
+    		break
 
 # If run as script.
 if __name__ == '__main__':
