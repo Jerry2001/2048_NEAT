@@ -2,6 +2,7 @@ import os
 import neat
 import game.tk_gui as gui
 import numpy as np
+import time
 
 import visualize
 from game import utils
@@ -116,17 +117,12 @@ def run(config_file):
     p.add_reporter(neat.Checkpointer(5))
 
     # Run for up to 300 generations.
-    winner = p.run(eval_genomes, 20)
+    winner = p.run(eval_genomes, 50)
 
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(winner))
-    visualize.plot_stats(stats, ylog=False, view=True)
-    visualize.plot_species(stats, view=True)
-
-    # Display the winning genome.
-    print('\nBest genome:\n{!s}'.format(winner))
-    visualize.plot_stats(stats, ylog=False, view=True, filename="heapstats")
-    visualize.plot_species(stats, view=True, filename= "heapspecies")
+    visualize.plot_stats(stats, ylog=False, view=True, filename="heapstats2")
+    visualize.plot_species(stats, view=True, filename= "heapspecies2")
     winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
     while(True):
     	winner_flag = not (input() == "False")

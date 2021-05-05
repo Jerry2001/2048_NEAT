@@ -2,6 +2,7 @@ import os
 import neat
 import game.tk_gui as gui
 import numpy as np
+import time
 
 import visualize
 from game import utils
@@ -128,19 +129,19 @@ def run(config_file):
 	p.add_reporter(stats)
 	p.add_reporter(neat.reporting.StdOutReporter(True))
 
-	winner = p.run(eval_genomes, 20)
+	winner = p.run(eval_genomes, 12)
 
     # Display the winning genome.
 	print('\nBest genome:\n{!s}'.format(winner))
 	visualize.plot_stats(stats, ylog=False, view=True, filename="hyperneatstats")
-    visualize.plot_species(stats, view=True, filename= "hyperneatspecies")
+	visualize.plot_species(stats, view=True, filename= "hyperneatspecies")
 	winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
-    while(True):
-    	winner_flag = not (input() == "False")
-    	if(winner_flag == True):
-    		winner_gif(winner_net)
-    	else:
-    		break
+	while(True):
+		winner_flag = not (input() == "False")
+		if(winner_flag == True):
+			winner_gif(winner_net)
+		else:
+			break
 
 # If run as script.
 if __name__ == '__main__':
