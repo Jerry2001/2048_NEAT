@@ -12,7 +12,7 @@ from game.utils import State
 
 game = GameCore(4)
 GUI = gui.GameGUI(game)
-NOT_MOVED_RESTART_THRESHOLD = 20
+NOT_MOVED_RESTART_THRESHOLD = 10
 
 def map_neuron_to_move(pos):
 	if pos == 0:
@@ -114,10 +114,10 @@ def run(config_file):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(5))
+    #p.add_reporter(neat.Checkpointer(5))
 
     # Run for up to 300 generations.
-    winner = p.run(eval_genomes, 50)
+    winner = p.run(eval_genomes, 100)
 
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(winner))

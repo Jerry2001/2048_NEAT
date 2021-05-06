@@ -129,12 +129,12 @@ def run(config_file):
 	p.add_reporter(stats)
 	p.add_reporter(neat.reporting.StdOutReporter(True))
 
-	winner = p.run(eval_genomes, 12)
+	winner = p.run(eval_genomes, 100)
 
     # Display the winning genome.
 	print('\nBest genome:\n{!s}'.format(winner))
-	visualize.plot_stats(stats, ylog=False, view=True, filename="hyperneatstats")
-	visualize.plot_species(stats, view=True, filename= "hyperneatspecies")
+	visualize.plot_stats(stats, ylog=False, view=True, filename="hyperneatstats2")
+	visualize.plot_species(stats, view=True, filename= "hyperneatspecies2")
 	winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
 	while(True):
 		winner_flag = not (input() == "False")
